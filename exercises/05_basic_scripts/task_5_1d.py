@@ -43,3 +43,8 @@ london_co = {
         "routing": True,
     },
 }
+# start
+dev = input("Введите имя устройства: ")
+param = ", ".join(london_co[dev].keys())
+param2 = input("Enter param ({})".format(param))
+print(london_co[dev].get(param2.lower(), "not present"))

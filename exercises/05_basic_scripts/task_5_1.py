@@ -46,3 +46,8 @@ london_co = {
         "routing": True,
     },
 }
+
+# statrt
+device = input("Enter name of device: ")
+
+print(london_co[device])

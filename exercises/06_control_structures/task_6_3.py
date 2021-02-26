@@ -14,9 +14,9 @@
 которые идут дальше.
 
 Пример значения и соответствующей команды:
-	['add', '10', '20'] - команда switchport trunk allowed vlan add 10,20
-	['del', '17'] - команда switchport trunk allowed vlan remove 17
-	['only', '11', '30'] - команда switchport trunk allowed vlan 11,30
+    ['add', '10', '20'] - команда switchport trunk allowed vlan add 10,20
+    ['del', '17'] - команда switchport trunk allowed vlan remove 17
+    ['only', '11', '30'] - команда switchport trunk allowed vlan 11,30
 
 Задача для портов 0/1, 0/2, 0/4:
 - сгенерировать конфигурацию на основе шаблона trunk_template
@@ -51,3 +51,43 @@ for intf, vlan in access.items():
             print(f" {command} {vlan}")
         else:
             print(f" {command}")
+
+for intf, vlans in trunk.items():
+    action = vlans[0].replace("add", " add").replace("only", "").replace("del", " remove")
+    vlans2 = (",").join(vlans[1:])
+    print(f"Interface FastEthernet {intf}")
+    for command in trunk_template:
+        if command.endswith("allowed vlan"):
+            print(f"{command}{action} {vlans2}")
+        else:
+            print(f"{command}")
+
+#variant2
+for intf, vlans in trunk.items():
+    action = vlans[0]
+    vlans2 = (",").join(vlans[1:])
+    print(f"Interface FastEthernet {intf}")
+    for command in trunk_template:
+        if command.endswith("allowed vlan"):
+            if action == "add":
+                print(f"{command} add {vlans2}")
+            elif action == "del":
+                print(f"{command} remove {vlans2}")
+            elif action == "only":
+                print(f"{command} {vlans2}")
+        else:
+            print(f"{command}")
+         
+#variant3
+trunk_actions = {"add":" add", "del":" remove", "only":""}
+for intf, vlans in trunk.items():
+    print(f"Interface FastEthernet {intf}")
+    for command in trunk_template:
+        if command.endswith("allowed vlan"):
+            action = vlans[0]
+            vlans2 = (",").join(vlans[1:])
+            print(f"{command}{trunk_actions[action]} {vlans2}")
+        else:
+            print(f"{command}")
+            
+            

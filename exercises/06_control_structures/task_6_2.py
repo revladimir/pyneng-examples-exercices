@@ -13,3 +13,19 @@
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+# start
+
+ip = input("Enter IP address: ")
+octets = ip.split (".")
+
+if int(octets[0]) in range (1,224):
+    print("unicast")
+elif int(octets [0]) in range (224, 240):
+    print("multicast")
+elif ip == "255.255.255.255":
+    print("local broadcast")
+elif ip == "0.0.0.0":
+    print("unassigned")
+else:
+    print("unused")
+        
